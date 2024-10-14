@@ -1,0 +1,12 @@
+services:
+  sopds:
+    image: sopds:latest
+    container_name: sopds
+    hostname: sopds
+    env_file:
+      - .env
+    volumes:
+      - "./library:/library:ro"
+      - "./db:/var/lib/pgsql"
+    ports:
+      - "8001:8001"
