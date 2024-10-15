@@ -75,10 +75,14 @@ if [ ! -f "$super_conf" ]; then
     [supervisorctl]
     serverurl=unix:///var/run/supervisor.sock
 
-#    [program:example]
-#    command=gunicorn --config /path/to/conf wsgi
-#    directory=/path/to/conf
+#    [program:gunicorn]
+#    command=gunicorn --config /etc/gunicorn/gunicorn.conf wsgi
+#    directory=/sopds/sopds
 #    user=www-data
+#    stdout_logfile=/dev/stdout
+#    stdout_logfile_maxbytes=0
+#    stderr_logfile=/dev/stdout
+#    stderr_logfile_maxbytes=0
 #    autostart=true
 #    autorestart=true
 
@@ -93,10 +97,14 @@ if [ ! -f "$super_conf" ]; then
     stderr_logfile_maxbytes=0
     depends_on=postgresql
 
-#    [program:nginx]
-#    command=nginx -c /path/to/conf -g "daemon off;"
-#    autostart=true
-#    autorestart=true
+    [program:nginx]
+    command=nginx -c /etc/nginx/nginx.conf -g "daemon off;"
+    stdout_logfile=/dev/stdout
+    stdout_logfile_maxbytes=0
+    stderr_logfile=/dev/stdout
+    stderr_logfile_maxbytes=0
+    autostart=true
+    autorestart=true
 
     [program:sopds_scanner]
     command=bash -c "wait_pg.sh && python3 manage.py sopds_scanner start"
