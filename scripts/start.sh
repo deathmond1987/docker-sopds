@@ -136,7 +136,7 @@ fi
 
 if [ -n "$SOPDS_TELEBOT_API_TOKEN" ]; then
     echo -e "  telegram api token variable found. Adding token in app..."
-    python3 manage.py sopds_util setconf SOPDS_TELEBOT_API_TOKEN "$SOPDS_TELEBOT_API_TOKEN"
+    python3 manage.py sopds_util setconf SOPDS_TELEBOT_API_TOKEN "$SOPDS_TELEBOT_API_TOKEN" >/dev/null 2>&1
 fi
 
 waitdbfile="/usr/bin/wait_pg.sh"
@@ -146,6 +146,11 @@ if [ ! -f "$waitdbfile" ]; then
           sleep 2
           done' > "$waitdbfile"
     chmod 700 "$waitdbfile"
+fi
+
+if [ -n "$SOPDS_TELEGRAM_USER_NAME" ]; then
+    echo -e "  telegram user name variable found. Adding telegram username $SOPDS_TELEGRAM_USER_NAME to sopds database..."
+    python manage.py createsuperuser --username "$SOPDS_TELEGRAM_USER_NAME" --noinput --email "$SOPDS_TELEGRAM_USER_NAME"@gmail.com >/dev/null 2>&1 || true
 fi
 
 su postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data -l /dev/stdout stop"
