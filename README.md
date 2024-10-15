@@ -9,6 +9,7 @@
 - Добавлен nginx
 - Добавлен docker-compose.yml
 - Переменные вынес в .env файл в docker-compose.yml
+- Для дебага временно вынес в /dev/stdout все логи которые нашел
 ---------------------------------------------------------------
 https://github.com/ichbinkirgiz/sopds
 
