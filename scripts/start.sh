@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env ash
 
 waiting_db(){
 while ! pg_isready -U postgres > /dev/null; do
@@ -87,7 +87,7 @@ if [ ! -f "$super_conf" ]; then
 #    autorestart=true
 
     [program:sopds_server]
-    command=bash -c "wait_pg.sh && python3 manage.py sopds_server start"
+    command=ash -c "wait_pg.sh && python3 manage.py sopds_server start"
 #    user=www-data
     autostart=true
     autorestart=true
@@ -107,7 +107,7 @@ if [ ! -f "$super_conf" ]; then
     autorestart=true
 
     [program:sopds_scanner]
-    command=bash -c "wait_pg.sh && python3 manage.py sopds_scanner start"
+    command=ash -c "wait_pg.sh && python3 manage.py sopds_scanner start"
     autostart=true
     autorestart=true
 
@@ -129,7 +129,7 @@ if [ "$SOPDS_TMBOT_ENABLE" == "True" ]; then
     if ! grep -q "telegram" "$super_conf"; then
     echo -e "  telegram config not found in $super_conf. Creating..."
     echo -e '[program:sopds_telegram]
-    command=bash -c "wait_pg.sh && python3 manage.py sopds_telebot start"
+    command=ash -c "wait_pg.sh && python3 manage.py sopds_telebot start"
     autostart=true' >> "$super_conf"
     fi
 fi

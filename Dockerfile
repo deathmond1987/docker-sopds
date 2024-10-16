@@ -61,18 +61,16 @@ ENV DB_USER="sopds" \
 COPY --from=build-stage /sopds /sopds
 COPY --from=build-stage /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
 
-RUN apk add --no-cache -U bash libxml2 libxslt libffi libjpeg zlib postgresql14 expect nginx
-RUN pip install supervisor
+RUN apk add --no-cache -U libxml2 libxslt libffi libjpeg zlib postgresql14 expect nginx
+RUN pip install supervisor --no-cache-dir
 COPY configs/nginx.conf /etc/nginx/
 #COPY configs/gunicorn.conf /etc/gunicorn/
-COPY scripts/start.sh /start.sh
-RUN chmod +x /start.sh
+COPY --chmod=700 scripts/start.sh /start.sh
 
 WORKDIR /sopds
 
 VOLUME /var/lib/pgsql
-EXPOSE 8001
 EXPOSE 80
 
 ENTRYPOINT ["/start.sh"]
-CMD ["supervisord", "-n" ]
+CMD ["supervisord", "-n", "-c", "/etc/supervisord.conf" ]
