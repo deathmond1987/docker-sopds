@@ -63,6 +63,7 @@ COPY --from=build-stage /usr/local/lib/python3.10/site-packages/ /usr/local/lib/
 
 RUN apk add --no-cache -U libxml2 libxslt libffi libjpeg zlib postgresql14 expect nginx
 RUN pip install supervisor --no-cache-dir
+RUN sed -i "s/DEBUG = True/DEBUG = False/g" /sopds/sopds/settings.py
 COPY configs/nginx.conf /etc/nginx/
 #COPY configs/gunicorn.conf /etc/gunicorn/
 COPY --chmod=700 scripts/start.sh /start.sh
