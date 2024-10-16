@@ -51,8 +51,8 @@ if [ ! -f /var/lib/pgsql/setconf ]; then
     touch /var/lib/pgsql/setconf
 fi
 
-super_dir=/etc/supervisor.d
-super_conf="$super_dir"/supervisor.ini
+super_dir=/etc
+super_conf="$super_dir"/supervisord.conf
 if [ ! -f "$super_conf" ]; then
     echo -e "  supervisor config not found. Creating config..."
     mkdir -p "$super_dir"

@@ -61,7 +61,8 @@ ENV DB_USER="sopds" \
 COPY --from=build-stage /sopds /sopds
 COPY --from=build-stage /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
 
-RUN apk add --no-cache -U bash libxml2 libxslt libffi libjpeg zlib postgresql14 expect supervisor nginx
+RUN apk add --no-cache -U bash libxml2 libxslt libffi libjpeg zlib postgresql14 expect nginx
+RUN pip install supervisor
 COPY configs/nginx.conf /etc/nginx/
 #COPY configs/gunicorn.conf /etc/gunicorn/
 COPY scripts/start.sh /start.sh
