@@ -47,7 +47,7 @@ if [ ! -f /var/lib/pgsql/setconf ]; then
     if [[ ! -z $SOPDS_SU_NAME && ! -z $SOPDS_SU_EMAIL &&  ! -z $SOPDS_SU_PASS ]]; then
         expect /sopds/superuser.exp
     fi
-
+    python3 manage.py sopds_util clear
     touch /var/lib/pgsql/setconf
 fi
 
