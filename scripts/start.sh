@@ -16,18 +16,18 @@ fi
 if [[ $EXT_DB == False && ! -f /var/lib/pgsql/data/PG_VERSION ]]; then
     chown -R postgres:postgres /var/lib/pgsql
     chmod -R 0700 /var/lib/pgsql
-    su postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data initdb --encoding=UTF-8 --locale=ru_RU"
-    su postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data -l /var/lib/pgsql/data/pg.log start"
+    su postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data initdb"
+    su postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data start"
     waiting_db
     psql -U postgres -c "create database sopds"
     psql -U postgres -c "create user sopds with password 'sopds'"
     psql -U postgres -c "grant all privileges on database sopds to sopds"
     cd /sopds
     python3 manage.py migrate
-    su postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data -l /var/lib/pgsql/data/pg.log stop"
+    su postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data stop"
 fi
 if [ $EXT_DB == False ]; then
-    su postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data -l /var/lib/pgsql/data/pg.log start"
+    su postgres -c "/usr/bin/pg_ctl -D /var/lib/pgsql/data start"
     waiting_db
 fi
 cd /sopds
