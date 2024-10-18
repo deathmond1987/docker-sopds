@@ -40,7 +40,7 @@ RUN apk add --no-cache -U tzdata build-base libxml2-dev libxslt-dev postgresql14
 FROM python:3.10.15-alpine3.20 AS production-stage
 LABEL maintainer="mail@zveronline.ru"
 
-ENV LANG=en_US.UTF-8 \
+ENV LANG=ru_RU.UTF-8 \
     DB_USER="sopds" \
     DB_NAME="sopds" \
     DB_PASS="sopds" \
