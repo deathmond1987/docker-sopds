@@ -15,7 +15,7 @@ RUN apk add --no-cache -U unzip \
 COPY scripts/fb2conv /fb2conv
 COPY scripts/superuser.exp .
 
-RUN apk add --no-cache -U tzdata build-base libxml2-dev libxslt-dev postgresql14-dev libffi-dev libc-dev jpeg-dev zlib-dev curl bash \
+RUN apk add --no-cache -U tzdata build-base libxml2-dev libxslt-dev postgresql14-dev libffi-dev libc-dev jpeg-dev zlib-dev curl \
     && cp /usr/share/zoneinfo/Europe/Moscow /etc/localtime \
     && echo "Europe/Moscow" > /etc/timezone \
     && pip3 install --upgrade pip setuptools 'psycopg2-binary>=2.8,<2.9' \
@@ -62,7 +62,7 @@ ENV LANG=ru_RU.UTF-8 \
 COPY --from=build-stage /sopds /sopds
 COPY --from=build-stage /usr/local/lib/python3.10/site-packages/ /usr/local/lib/python3.10/site-packages/
 
-RUN apk add --no-cache -U libxml2 libxslt libffi libjpeg zlib postgresql14 expect nginx
+RUN apk add --no-cache -U libxml2 libxslt libffi libjpeg zlib postgresql14 expect nginx bash
 RUN pip install supervisor --no-cache-dir
 RUN sed -i "s/DEBUG = True/DEBUG = False/g" /sopds/sopds/settings.py
 COPY configs/nginx.conf /etc/nginx/
