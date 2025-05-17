@@ -15,7 +15,7 @@ RUN apk add --no-cache -U unzip \
 COPY scripts/fb2conv /fb2conv
 COPY scripts/superuser.exp .
 
-RUN apk add --no-cache -U tzdata build-base libxml2-dev libxslt-dev postgresql14-dev libffi-dev libc-dev jpeg-dev zlib-dev curl \
+RUN apk add --no-cache -U tzdata build-base libxml2-dev libxslt-dev postgresql14-dev libffi-dev libc-dev jpeg-dev zlib-dev curl bash \
     && cp /usr/share/zoneinfo/Europe/Moscow /etc/localtime \
     && echo "Europe/Moscow" > /etc/timezone \
     && pip3 install --upgrade pip setuptools 'psycopg2-binary>=2.8,<2.9' \
